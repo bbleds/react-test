@@ -24,13 +24,51 @@ var Greeter = React.createClass({
   }
 });
 
+var Asker = React.createClass({
+  getDefaultProps: function(){
+    return {
+      name: 'friend'
+    }
+  },
+  getInitialState: function(){
+    return {
+      name: this.props.name
+    }
+  },
+  // custom function for us
+  onButtonClick: function(e){
+    e.preventDefault();
+    // get name off of refs and get value
+    var name = this.refs.name.value;
+    this.refs.name.value = '';
+    console.log('we are setting state');
+    this.setState({name : name});
+  },
+  render : function(){
+    var name = this.state.name;
+
+    return (
+      <div>
+        <form onSubmit={this.onButtonClick}>
+          <input type='text' ref="name" placeholder="Please enter your name"/>
+          <button type='submit'>Set Name</button>
+        </form>
+        <h1>Hello, {name}</h1>
+      </div>
+    )
+  }
+});
+
 var examplePassingInProps = 'Ben';
 var exampleMessage = 'This is from a prop';
 
 // kickoff react app
 ReactDOM.render(
   // pass jsx
-  <Greeter name={examplePassingInProps} message={exampleMessage}/>,
+  <div>
+    <Greeter name={examplePassingInProps} message={exampleMessage}/>
+    <Asker />
+  </div>,
   // pass dom node
   document.getElementById('app')
 );
