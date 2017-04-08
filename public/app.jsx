@@ -2,7 +2,12 @@
 // define behavior for our component
 // add and define methods
 var Greeter = React.createClass({
-
+  // set default props for this compoenent
+  getDefaultProps: function(){
+    return {
+      name : 'friend'
+    }
+  },
   // render is the only method required for success
   // exprects some jsx code that we want to render to dom
   render: function(){
@@ -20,7 +25,7 @@ var Greeter = React.createClass({
 // kickoff react app
 ReactDOM.render(
   // pass jsx
-  <Greeter name='Ben'/>,
+  <Greeter/>, 
   // pass dom node
   document.getElementById('app')
 );
