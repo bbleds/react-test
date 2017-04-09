@@ -16,12 +16,20 @@ var Greeter = React.createClass({
     }
   },
   // function to pass into children
-  handleNewName: function(name){
-    console.log('inside of the handle new name method, preparring to set state to: ', name);
-    // WE ARE READY TO SET OUR STATE
-    this.setState({
-      name: name
-    });
+  handleNewName: function(data){
+    var updateData = {};
+
+    // only set the fields that have values
+    for(var field in data){
+      var value = data[field];
+
+      // only update if we actually have a value
+      if(value){
+        updateData[field] = value;
+      }
+    }
+
+    this.setState(updateData);
   },
   // render is the only method required for success
   // exprects some jsx code that we want to render to dom
@@ -31,7 +39,7 @@ var Greeter = React.createClass({
 
     return (
       <div>
-        <GreeterMessage parentName={name}/>
+        <GreeterMessage parentName={name} parentMessage={message}/>
         <GreeterForm onNewName={this.handleNewName}/>
       </div>
     );
@@ -43,7 +51,7 @@ var GreeterMessage = React.createClass({
       return (
         <div>
           <h1>Hello, {this.props.parentName}</h1>
-          <p>Some paragraph tag</p>
+          <p>{this.props.parentMessage}</p>
         </div>
       )
   }
@@ -52,17 +60,24 @@ var GreeterMessage = React.createClass({
 var GreeterForm = React.createClass({
   onFormSubmit : function(e){
     e.preventDefault();
-    console.log('should now be stopping');
-    var name = this.refs.name.value;
 
-    if(!name){
+    var name = this.refs.name.value;
+    var message = this.refs.message.value;
+
+    if(!name && !message){
       return false;
     }
 
     this.refs.name.value = '';
-console.log('here ', name);
+    this.refs.message.value='';
+
+    var data = {
+      name : name,
+      message: message
+    }
+
     // pass name to parent
-    this.props.onNewName(name);
+    this.props.onNewName(data);
   }
   ,
   render: function(){
@@ -70,6 +85,7 @@ console.log('here ', name);
       <div>
         <form onSubmit={this.onFormSubmit}>
           <input type='text' ref="name" placeholder="Please enter your name in this greeter message"/>
+          <textarea ref='message'></textarea>
           <button type='submit'>Set Name</button>
         </form>
       </div>
