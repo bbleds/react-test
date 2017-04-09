@@ -30,6 +30,7 @@ var Asker = React.createClass({
       name: 'friend'
     }
   },
+  // handle our inital states
   getInitialState: function(){
     return {
       name: this.props.name
@@ -40,6 +41,12 @@ var Asker = React.createClass({
     e.preventDefault();
     // get name off of refs and get value
     var name = this.refs.name.value;
+
+    // if empty, do nothing
+    if(!name){
+      return false;
+    }
+
     this.refs.name.value = '';
     console.log('we are setting state');
     this.setState({name : name});
