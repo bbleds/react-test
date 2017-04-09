@@ -9,58 +9,69 @@ var Greeter = React.createClass({
       message: 'Default message'
     }
   },
+  getInitialState: function(){
+    return {
+      name: this.props.name,
+      message: this.props.message
+    }
+  },
+  // function to pass into children
+  handleNewName: function(name){
+    console.log('inside of the handle new name method, preparring to set state to: ', name);
+    // WE ARE READY TO SET OUR STATE
+    this.setState({
+      name: name
+    });
+  },
   // render is the only method required for success
   // exprects some jsx code that we want to render to dom
   render: function(){
-    var name = this.props.name;
-    var message = this.props.message;
+    var name = this.state.name;
+    var message = this.state.message;
 
     return (
       <div>
-        <h1>Hello {name}, welcome to react world</h1>
-        <p>{message}</p>
+        <GreeterMessage parentName={name}/>
+        <GreeterForm onNewName={this.handleNewName}/>
       </div>
     );
   }
 });
 
-var Asker = React.createClass({
-  getDefaultProps: function(){
-    return {
-      name: 'friend'
-    }
-  },
-  // handle our inital states
-  getInitialState: function(){
-    return {
-      name: this.props.name
-    }
-  },
-  // custom function for us
-  onButtonClick: function(e){
+var GreeterMessage = React.createClass({
+  render: function(){
+      return (
+        <div>
+          <h1>Hello, {this.props.parentName}</h1>
+          <p>Some paragraph tag</p>
+        </div>
+      )
+  }
+});
+
+var GreeterForm = React.createClass({
+  onFormSubmit : function(e){
     e.preventDefault();
-    // get name off of refs and get value
+    console.log('should now be stopping');
     var name = this.refs.name.value;
 
-    // if empty, do nothing
     if(!name){
       return false;
     }
 
     this.refs.name.value = '';
-    console.log('we are setting state');
-    this.setState({name : name});
-  },
-  render : function(){
-    var name = this.state.name;
-
+console.log('here ', name);
+    // pass name to parent
+    this.props.onNewName(name);
+  }
+  ,
+  render: function(){
     return (
       <div>
-        <form onSubmit={this.onButtonClick}>
-          <input type='text' ref="name" placeholder="Please enter your name"/>
+        <form onSubmit={this.onFormSubmit}>
+          <input type='text' ref="name" placeholder="Please enter your name in this greeter message"/>
           <button type='submit'>Set Name</button>
         </form>
-        <h1>Hello, {name}</h1>
       </div>
     )
   }
@@ -74,7 +85,6 @@ ReactDOM.render(
   // pass jsx
   <div>
     <Greeter name={examplePassingInProps} message={exampleMessage}/>
-    <Asker />
   </div>,
   // pass dom node
   document.getElementById('app')
