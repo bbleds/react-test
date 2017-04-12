@@ -1,3 +1,8 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
+var GreeterMessage = require('./components/GreeterMessage');
+var GreeterForm = require('./components/GreeterForm');
+
 // use react library -- take options opject
 // define behavior for our component
 // add and define methods
@@ -46,52 +51,8 @@ var Greeter = React.createClass({
   }
 });
 
-var GreeterMessage = React.createClass({
-  render: function(){
-      return (
-        <div>
-          <h1>Hello, {this.props.parentName}</h1>
-          <p>{this.props.parentMessage}</p>
-        </div>
-      )
-  }
-});
 
-var GreeterForm = React.createClass({
-  onFormSubmit : function(e){
-    e.preventDefault();
 
-    var name = this.refs.name.value;
-    var message = this.refs.message.value;
-
-    if(!name && !message){
-      return false;
-    }
-
-    this.refs.name.value = '';
-    this.refs.message.value='';
-
-    var data = {
-      name : name,
-      message: message
-    }
-
-    // pass name to parent
-    this.props.onNewName(data);
-  }
-  ,
-  render: function(){
-    return (
-      <div>
-        <form onSubmit={this.onFormSubmit}>
-          <input type='text' ref="name" placeholder="Please enter your name in this greeter message"/>
-          <textarea ref='message'></textarea>
-          <button type='submit'>Submit</button>
-        </form>
-      </div>
-    )
-  }
-});
 
 var examplePassingInProps = 'Ben';
 var exampleMessage = 'This is from a prop';
