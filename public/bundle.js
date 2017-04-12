@@ -48,59 +48,7 @@
 
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(158);
-	var GreeterMessage = __webpack_require__(159);
-	var GreeterForm = __webpack_require__(160);
-
-	// use react library -- take options opject
-	// define behavior for our component
-	// add and define methods
-	var Greeter = React.createClass({
-	  displayName: 'Greeter',
-
-	  // set default props for this compoenent
-	  getDefaultProps: function getDefaultProps() {
-	    return {
-	      name: 'friend',
-	      message: 'Default message'
-	    };
-	  },
-	  getInitialState: function getInitialState() {
-	    return {
-	      name: this.props.name,
-	      message: this.props.message
-	    };
-	  },
-	  // function to pass into children
-	  handleNewName: function handleNewName(data) {
-	    var updateData = {};
-
-	    // only set the fields that have values
-	    for (var field in data) {
-	      var value = data[field];
-
-	      // only update if we actually have a value
-	      if (value) {
-	        updateData[field] = value;
-	      }
-	    }
-
-	    this.setState(updateData);
-	  },
-	  // render is the only method required for success
-	  // exprects some jsx code that we want to render to dom
-	  render: function render() {
-	    var name = this.state.name;
-	    var message = this.state.message;
-
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(GreeterMessage, { parentName: name, parentMessage: message }),
-	      React.createElement(GreeterForm, { onNewName: this.handleNewName })
-	    );
-	  }
-	});
-
+	var Greeter = __webpack_require__(159);
 	var examplePassingInProps = 'Ben';
 	var exampleMessage = 'This is from a prop';
 
@@ -19812,6 +19760,68 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
+	var GreeterMessage = __webpack_require__(160);
+	var GreeterForm = __webpack_require__(161);
+
+	// use react library -- take options opject
+	// define behavior for our component
+	// add and define methods
+	var Greeter = React.createClass({
+	  displayName: 'Greeter',
+
+	  // set default props for this compoenent
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      name: 'friend',
+	      message: 'Default message'
+	    };
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      name: this.props.name,
+	      message: this.props.message
+	    };
+	  },
+	  // function to pass into children
+	  handleNewName: function handleNewName(data) {
+	    var updateData = {};
+
+	    // only set the fields that have values
+	    for (var field in data) {
+	      var value = data[field];
+
+	      // only update if we actually have a value
+	      if (value) {
+	        updateData[field] = value;
+	      }
+	    }
+
+	    this.setState(updateData);
+	  },
+	  // render is the only method required for success
+	  // exprects some jsx code that we want to render to dom
+	  render: function render() {
+	    var name = this.state.name;
+	    var message = this.state.message;
+
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(GreeterMessage, { parentName: name, parentMessage: message }),
+	      React.createElement(GreeterForm, { onNewName: this.handleNewName })
+	    );
+	  }
+	});
+
+	module.exports = Greeter;
+
+/***/ },
+/* 160 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
 
 	var GreeterMessage = React.createClass({
 	  displayName: 'GreeterMessage',
@@ -19839,7 +19849,7 @@
 	module.exports = GreeterMessage;
 
 /***/ },
-/* 160 */
+/* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
